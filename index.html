@@ -79,6 +79,7 @@
     border-bottom:1px solid var(--hairline);
   }
   nav .rail{
+    position:relative;
     display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;
     padding:0 14px;max-width:640px;margin:0 auto;
   }
@@ -86,10 +87,16 @@
   nav a{
     flex:0 0 auto;padding:15px 10px 13px;font-size:13px;letter-spacing:.02em;
     color:var(--ink-soft);text-decoration:none;
-    border-bottom:2px solid transparent;white-space:nowrap;
+    white-space:nowrap;
   }
-  nav a.on{color:var(--ink);font-weight:600;border-bottom-color:var(--copper)}
+  nav a.on{color:var(--ink);font-weight:600}
   nav a:focus-visible{outline:2px solid var(--copper);outline-offset:-2px}
+  nav .ink{
+    position:absolute;bottom:0;height:2px;background:var(--copper);
+    transition:transform .3s cubic-bezier(.22,1,.36,1);
+    will-change:transform;
+  }
+  @media (prefers-reduced-motion: reduce){ nav .ink{transition:none} }
 
   /* ---------- signatures rail ---------- */
   .sigs{padding:36px 0 6px}
@@ -123,6 +130,33 @@
     border:1px solid rgba(176,114,46,.45);border-radius:99px;
     padding:2.5px 8px;
   }
+
+  /* ---------- perfect pairings ---------- */
+  .pairs{padding-top:40px}
+  .pairs .kicker{
+    text-align:center;font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--copper);font-weight:600;margin-bottom:4px;
+  }
+  .pairrail{
+    display:flex;gap:14px;overflow-x:auto;padding:6px 20px 18px;
+    scroll-snap-type:x mandatory;scrollbar-width:none;
+    max-width:640px;margin:0 auto;
+  }
+  .pairrail::-webkit-scrollbar{display:none}
+  .pair{
+    flex:0 0 248px;scroll-snap-align:start;
+    background:var(--card);border:1px solid var(--hairline);border-radius:12px;
+    overflow:hidden;text-decoration:none;color:var(--ink);
+  }
+  .pair .im{aspect-ratio:4/3;display:grid;grid-template-columns:1fr 1fr;gap:2px;background:rgba(216,199,172,.35);overflow:hidden}
+  .pair .im.solo{grid-template-columns:1fr}
+  .pair .im img{width:100%;height:100%;object-fit:cover}
+  .pair .tx{padding:12px 14px 14px}
+  .pair .nm{font-family:'Newsreader',serif;font-weight:600;font-size:16.5px;line-height:1.25}
+  .pair .items{margin-top:3px;font-size:12.5px;color:var(--ink-soft)}
+  .pair .meta{display:flex;justify-content:space-between;align-items:baseline;margin-top:9px;gap:8px}
+  .pair .pr{font-family:'Newsreader',serif;font-size:16px;font-weight:500;white-space:nowrap}
+  .pair .pr span{font-family:'Archivo',sans-serif;font-size:9.5px;letter-spacing:.1em;color:var(--copper);margin-right:2px}
 
   /* ---------- sections ---------- */
   section{scroll-margin-top:64px;padding-top:44px}
@@ -189,6 +223,12 @@
     letter-spacing:.12em;color:var(--copper);font-weight:500;
   }
 
+  /* ---------- endpoint hints ---------- */
+  .hint{
+    margin-top:2px;padding:13px 0 2px;border-top:1px solid var(--hairline);
+    text-align:center;font-size:13px;font-style:italic;color:var(--clay);
+  }
+
   /* ---------- gifting band ---------- */
   .band{
     margin:44px -20px 0;background:var(--espresso);color:var(--paper);
@@ -204,10 +244,48 @@
   }
   .band a:focus-visible{outline:2px solid var(--copper);outline-offset:2px}
 
-  /* ---------- scroll reveal ---------- */
+  /* ---------- cinematic motion (all gated on reduced-motion) ---------- */
   @media (prefers-reduced-motion: no-preference){
-    html.js .fcard,html.js .sig,html.js .band{opacity:0;transform:translateY(10px);transition:opacity .5s ease,transform .5s ease}
-    html.js .fcard.in,html.js .sig.in,html.js .band.in{opacity:1;transform:none}
+    /* hero: slow Ken Burns + sequenced entrance */
+    .hero .photo img{animation:kenburns 14s ease-in-out infinite alternate}
+    @keyframes kenburns{from{transform:scale(1)}to{transform:scale(1.08)}}
+    html.js .hero h1,html.js .hero .sub,html.js .hero .branches,html.js .hero .seal{
+      opacity:0;animation:rise .8s cubic-bezier(.22,1,.36,1) forwards;
+    }
+    html.js .hero .sub{animation-delay:.15s}
+    html.js .hero .branches{animation-delay:.3s}
+    html.js .hero .seal{animation-delay:.45s}
+    @keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+
+    /* staggered scroll reveals (delay set per-element by JS) */
+    html.js .sig,html.js .band,html.js .pair,html.js .item{
+      opacity:0;transform:translateY(14px);
+      transition:opacity .6s cubic-bezier(.22,1,.36,1),transform .6s cubic-bezier(.22,1,.36,1);
+    }
+    html.js .fcard{
+      opacity:0;transform:translateY(22px);
+      transition:opacity .7s cubic-bezier(.22,1,.36,1),transform .7s cubic-bezier(.22,1,.36,1);
+    }
+    html.js .fcard .im img,html.js .pair .im img{transform:scale(1.06);transition:transform .9s cubic-bezier(.22,1,.36,1)}
+    html.js .fcard.in,html.js .sig.in,html.js .band.in,html.js .pair.in,html.js .item.in{opacity:1;transform:none}
+    html.js .fcard.in .im img,html.js .pair.in .im img{transform:none}
+
+    /* chapter moment: section header seal drifts in, copper hairline draws */
+    html.js .sec{opacity:0;transform:translateY(10px);transition:opacity .6s cubic-bezier(.22,1,.36,1),transform .6s cubic-bezier(.22,1,.36,1)}
+    html.js .sec.in{opacity:1;transform:none}
+    .sec::after{content:"";display:block;width:56px;height:1px;background:var(--copper);opacity:.55;transform:scaleX(0);transition:transform .9s cubic-bezier(.22,1,.36,1) .25s}
+    html.js .sec.in::after{transform:scaleX(1)}
+    html:not(.js) .sec::after{transform:scaleX(1)}
+
+    /* tactile presses + hover lift */
+    .sig:active,.pair:active,.fcard:active{transform:scale(.98)!important}
+    @media (hover:hover){
+      .sig:hover,.pair:hover{transform:translateY(-2px);box-shadow:0 10px 26px rgba(46,37,25,.10)}
+    }
+
+    /* back-to-top seal rotates into view */
+    button.totop{transform:rotate(-90deg) scale(.9);transition:opacity .3s ease,transform .35s cubic-bezier(.22,1,.36,1)}
+    button.totop.show{transform:none}
   }
 
   /* ---------- back to top ---------- */
@@ -244,6 +322,7 @@
 
 <nav>
   <div class="rail" id="rail">
+    <a href="#pairings">Pairings</a>
     <a href="#coffee">Coffee</a>
     <a href="#turkish-coffee">Turkish Coffee</a>
     <a href="#cold-coffee">Cold Coffee</a>
@@ -300,6 +379,50 @@
   </div>
 </div>
 
+<section id="pairings" class="pairs">
+  <header class="sec"><div class="seal"></div><h2>Perfect Pairings</h2>
+    <p class="note">The moments our guests order together, again and again — ask for them by name.</p>
+  </header>
+  <div class="pairrail">
+    <a class="pair" href="#turkish-coffee">
+      <div class="im"><img src="img/turkish-coffee.jpg" alt="Turkish coffee" loading="lazy"><img src="img/simit-kaymak.jpg" alt="Sesame simit with kaymak" loading="lazy"></div>
+      <div class="tx"><div class="nm">The Istanbul Ritual</div>
+        <p class="items">Turkish Coffee + Simit with Kaymak</p>
+        <div class="meta"><span class="badge">Morning</span><span class="pr"><span>AED</span>49</span></div></div>
+    </a>
+    <a class="pair" href="#coffee">
+      <div class="im solo"><img src="img/pistachio-latte.jpg" alt="Pistachio latte" loading="lazy"></div>
+      <div class="tx"><div class="nm">The Pistachio Moment</div>
+        <p class="items">Pistachio Latte, made on coconut milk</p>
+        <div class="meta"><span class="badge">Most loved</span><span class="pr">from <span>AED</span>32</span></div></div>
+    </a>
+    <a class="pair" href="#cakes">
+      <div class="im"><img src="img/saffron-milk-cake.jpg" alt="Saffron milk cake" loading="lazy"><img src="img/turkish-coffee.jpg" alt="Turkish coffee" loading="lazy"></div>
+      <div class="tx"><div class="nm">The Golden Hour</div>
+        <p class="items">Any cake + a Turkish Coffee</p>
+        <div class="meta"><span class="badge">Afternoon</span><span class="pr">from <span>AED</span>56</span></div></div>
+    </a>
+    <a class="pair" href="#desserts">
+      <div class="im"><img src="img/fondue.jpg" alt="Chocolate fondue" loading="lazy"><img src="img/turkish-coffee.jpg" alt="Turkish coffee" loading="lazy"></div>
+      <div class="tx"><div class="nm">The Fondue Evening</div>
+        <p class="items">Fondue with Mixed Fruits + two Turkish Coffees</p>
+        <div class="meta"><span class="badge">For sharing</span><span class="pr"><span>AED</span>101</span></div></div>
+    </a>
+    <a class="pair" href="#chocolate">
+      <div class="im"><img src="img/cappuccino.jpg" alt="Cappuccino" loading="lazy"><img src="img/gofrik.jpg" alt="Gofrik chocolate wafer" loading="lazy"></div>
+      <div class="tx"><div class="nm">The Sweet Finish</div>
+        <p class="items">Add a Gofrik wafer to any coffee</p>
+        <div class="meta"><span class="badge">Add-on</span><span class="pr">+<span>AED</span>7</span></div></div>
+    </a>
+    <a class="pair" href="#gift-boxes">
+      <div class="im solo"><img src="img/gb-mini.jpg" alt="Elegant mini gift box" loading="lazy"></div>
+      <div class="tx"><div class="nm">Take the Moment Home</div>
+        <p class="items">The Elegant Mini Gift Box, with any order</p>
+        <div class="meta"><span class="badge">Take home</span><span class="pr"><span>AED</span>19</span></div></div>
+    </a>
+  </div>
+</section>
+
 <div class="wrap">
 
 <section id="coffee">
@@ -319,7 +442,6 @@
   <div class="list">
     <div class="item noimg"><div class="tx"><div class="nm">Espresso</div><p class="ds">Our signature roast — single or double.</p></div><div class="pr"><span>AED</span>17 / 19</div></div>
     <div class="item noimg"><div class="tx"><div class="nm">Espresso Macchiato</div><p class="ds">Marked with a spoon of milk foam — single or double.</p></div><div class="pr"><span>AED</span>18 / 20</div></div>
-    <div class="item noimg"><div class="tx"><div class="nm">Espresso Con Panna</div><p class="ds">Topped with whipped cream — single or double.</p></div><div class="pr"><span>AED</span>18 / 20</div></div>
     <div class="item noimg"><div class="tx"><div class="nm">Americano</div><p class="ds">Espresso lengthened with hot water.</p></div><div class="pr"><span>AED</span>18</div></div>
     <div class="item noimg"><div class="tx"><div class="nm">Cortado</div><p class="ds">Equal parts espresso and steamed milk.</p></div><div class="pr"><span>AED</span>22</div></div>
     <div class="item noimg"><div class="tx"><div class="nm">Piccolo</div><p class="ds">A short latte — small and strong.</p></div><div class="pr"><span>AED</span>22</div></div>
@@ -335,6 +457,7 @@
     <div class="item noimg"><div class="tx"><div class="nm">White Hazelnut Latte</div><p class="ds">White chocolate and hazelnut. <em>Contains nuts</em></p></div><div class="pr"><span>AED</span>32</div></div>
     <div class="item noimg"><div class="tx"><div class="nm">Hot Spanish Latte</div><p class="ds">Espresso with sweet condensed milk.</p></div><div class="pr"><span>AED</span>32</div></div>
   </div>
+  <p class="hint">Finish it sweet — add a Gofrik chocolate wafer for AED 7.</p>
 </section>
 
 <section id="turkish-coffee">
@@ -350,7 +473,6 @@
   </div>
   <div class="list">
     <div class="item noimg"><div class="tx"><div class="nm">Turkish Coffee with Mastic</div><p class="ds">Scented with Aegean mastic — single or double.</p></div><div class="pr"><span>AED</span>20 / 22</div></div>
-    <div class="item noimg"><div class="tx"><div class="nm">Coffee with Salep</div><p class="ds">Coffee folded into warm salep, dusted with cinnamon.</p></div><div class="pr"><span>AED</span>22</div></div>
   </div>
 </section>
 
@@ -444,7 +566,6 @@
     <div class="item noimg"><div class="tx"><div class="nm">Melon Fresher</div><p class="ds">Melon, strawberry and mango.</p></div><div class="pr"><span>AED</span>36</div></div>
     <div class="item noimg"><div class="tx"><div class="nm">Healthy 5</div><p class="ds">Strawberry, pineapple, mango, kiwi and apple.</p></div><div class="pr"><span>AED</span>36</div></div>
     <div class="item noimg"><div class="tx"><div class="nm">Fresh Orange Juice</div><p class="ds">Freshly squeezed.</p></div><div class="pr"><span>AED</span>25</div></div>
-    <div class="item noimg"><div class="tx"><div class="nm">Lemonade</div><p class="ds">Fresh lemon, lightly sweetened.</p></div><div class="pr"><span>AED</span>24</div></div>
     <div class="item noimg"><div class="tx"><div class="nm">Premium Still Water — 330 ml</div></div><div class="pr"><span>AED</span>12</div></div>
     <div class="item noimg"><div class="tx"><div class="nm">Premium Still Water — 750 ml</div></div><div class="pr"><span>AED</span>21</div></div>
     <div class="item noimg"><div class="tx"><div class="nm">Premium Sparkling Water — 250 ml</div></div><div class="pr"><span>AED</span>14</div></div>
@@ -512,6 +633,7 @@
         <p class="ds">Brownie, chocolate cream, caramel, vanilla ice cream.</p></div>
     </div>
   </div>
+  <p class="hint">Something for later? The Elegant Mini Gift Box is AED 19.</p>
 </section>
 
 <section id="cakes">
@@ -570,6 +692,7 @@
     <div class="item"><div class="ph has" style="background-image:url('img/double-scoop.jpg')"></div><div class="tx"><div class="nm">Natural Ice Cream — Double Scoop</div><p class="ds">Any two flavours.</p></div><div class="pr"><span>AED</span>28</div></div>
     <div class="item"><div class="ph has" style="background-image:url('img/ice-cream-fruits.jpg')"></div><div class="tx"><div class="nm">Natural Ice Cream with Fresh Fruits</div><p class="ds">Any flavour, with seasonal fruit.</p></div><div class="pr"><span>AED</span>36</div></div>
   </div>
+  <p class="hint">Something for later? The Elegant Mini Gift Box is AED 19.</p>
 </section>
 
 <section id="chocolate">
@@ -635,6 +758,7 @@
     <div class="seal pale"></div>
     <h3>Taking something home?</h3>
     <p>Any box can be personalised at the chocolate counter — seasonal designs change through the year.</p>
+    <p>Staying a while instead? Ask for the Fondue Evening — fondue and two Turkish coffees, AED 101.</p>
     <a href="#gift-boxes">Gift boxes from AED 19</a>
   </div>
 </section>
@@ -682,7 +806,12 @@
 <script>
 (function(){
   document.documentElement.classList.add('js');
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var links = document.querySelectorAll('nav a');
+  var rail = document.getElementById('rail');
+  var ink = document.createElement('span');
+  ink.className = 'ink';
+  rail.appendChild(ink);
   var byId = {};
   links.forEach(function(a){ byId[a.getAttribute('href').slice(1)] = a; });
   var current = null;
@@ -693,7 +822,9 @@
     var a = byId[id];
     if(a){
       a.classList.add('on');
-      a.scrollIntoView({block:'nearest', inline:'center', behavior:'smooth'});
+      ink.style.width = a.offsetWidth + 'px';
+      ink.style.transform = 'translateX(' + a.offsetLeft + 'px)';
+      a.scrollIntoView({block:'nearest', inline:'center', behavior: reduce ? 'auto' : 'smooth'});
     }
   }
   var sections = Array.prototype.slice.call(document.querySelectorAll('section'));
@@ -720,28 +851,49 @@
   }
   var totop = document.getElementById('totop');
   totop.addEventListener('click', function(){
-    window.scrollTo({top:0, behavior:'smooth'});
+    window.scrollTo({top:0, behavior: reduce ? 'auto' : 'smooth'});
   });
   function toggleTop(){
     totop.classList.toggle('show', window.scrollY > 1200);
+  }
+  /* gentle parallax on section seals (transform-only, viewport-scoped) */
+  var seals = sections.map(function(s){ return s.querySelector('.sec .seal'); });
+  function drift(){
+    if(reduce) return;
+    for(var i = 0; i < sections.length; i++){
+      if(!seals[i]) continue;
+      var r = sections[i].getBoundingClientRect();
+      if(r.bottom < 0 || r.top > window.innerHeight) continue;
+      seals[i].style.transform = 'translateY(' + (r.top * 0.05).toFixed(1) + 'px)';
+    }
   }
   var ticking = false;
   window.addEventListener('scroll', function(){
     if(ticking) return;
     ticking = true;
-    requestAnimationFrame(function(){ ticking = false; spy(); toggleTop(); });
+    requestAnimationFrame(function(){ ticking = false; spy(); toggleTop(); drift(); });
   }, {passive:true});
+  window.addEventListener('resize', function(){
+    if(current){ var a = byId[current]; if(a){ ink.style.width = a.offsetWidth + 'px'; ink.style.transform = 'translateX(' + a.offsetLeft + 'px)'; } }
+  });
   spy();
 
-  if('IntersectionObserver' in window){
+  var revealSel = '.sec,.fcard,.sig,.band,.pair,.item';
+  if('IntersectionObserver' in window && !reduce){
+    /* stagger: delay indexed within each parent group, capped at 8 steps */
+    document.querySelectorAll('.list,.feat,.sigrail,.pairrail').forEach(function(group){
+      Array.prototype.forEach.call(group.children, function(el, i){
+        el.style.transitionDelay = (Math.min(i, 8) * 70) + 'ms';
+      });
+    });
     var io = new IntersectionObserver(function(entries){
       entries.forEach(function(e){
         if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
       });
     }, {rootMargin:'0px 0px -40px 0px'});
-    document.querySelectorAll('.fcard,.sig,.band').forEach(function(el){ io.observe(el); });
+    document.querySelectorAll(revealSel).forEach(function(el){ io.observe(el); });
   } else {
-    document.querySelectorAll('.fcard,.sig,.band').forEach(function(el){ el.classList.add('in'); });
+    document.querySelectorAll(revealSel).forEach(function(el){ el.classList.add('in'); });
   }
 })();
 </script>
