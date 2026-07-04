@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kahve Dünyası — Menu</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Kahve Dünyası Dubai — Menu</title>
 <meta name="description" content="Kahve Dünyası Dubai — coffee, chocolate and patisserie. Ibn Battuta Mall &amp; Mirdif City Centre.">
 <meta name="theme-color" content="#2A1E14">
 <meta property="og:title" content="Kahve Dünyası Dubai — Menu">
@@ -19,9 +19,10 @@
     --paper:#F7F2E9;
     --card:#FFFDF8;
     --stone:#D8C7AC;
-    --clay:#8A6F50;
+    --clay:#786040;
     --clay-deep:#6B5439;
     --copper:#B0722E;
+    --copper-text:#8A5A22;
     --espresso:#2A1E14;
     --ink:#2E2519;
     --ink-soft:#5C4D3B;
@@ -102,7 +103,7 @@
   .sigs{padding:36px 0 6px}
   .sigs .kicker{
     text-align:center;font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;
-    color:var(--copper);font-weight:600;margin-bottom:16px;
+    color:var(--copper-text);font-weight:600;margin-bottom:16px;
   }
   .sigrail{
     display:flex;gap:14px;overflow-x:auto;padding:2px 20px 18px;
@@ -121,12 +122,12 @@
   .sig .nm{font-family:'Newsreader',serif;font-weight:600;font-size:16px;line-height:1.25}
   .sig .meta{display:flex;justify-content:space-between;align-items:baseline;margin-top:6px}
   .sig .pr{font-family:'Newsreader',serif;font-size:16px;font-weight:500}
-  .sig .pr span{font-family:'Archivo',sans-serif;font-size:9.5px;letter-spacing:.1em;color:var(--copper);margin-right:2px}
+  .sig .pr span{font-family:'Archivo',sans-serif;font-size:9.5px;letter-spacing:.1em;color:var(--copper-text);margin-right:2px}
 
   /* ---------- badges ---------- */
   .badge{
     display:inline-block;font-size:9.5px;font-weight:600;letter-spacing:.12em;
-    text-transform:uppercase;color:var(--copper);
+    text-transform:uppercase;color:var(--copper-text);
     border:1px solid rgba(176,114,46,.45);border-radius:99px;
     padding:2.5px 8px;
   }
@@ -152,7 +153,7 @@
   .pair .items{margin-top:3px;font-size:12.5px;color:var(--ink-soft)}
   .pair .meta{display:flex;justify-content:space-between;align-items:baseline;margin-top:9px;gap:8px}
   .pair .pr{font-family:'Newsreader',serif;font-size:16px;font-weight:500;white-space:nowrap}
-  .pair .pr span{font-family:'Archivo',sans-serif;font-size:9.5px;letter-spacing:.1em;color:var(--copper);margin-right:2px}
+  .pair .pr span{font-family:'Archivo',sans-serif;font-size:9.5px;letter-spacing:.1em;color:var(--copper-text);margin-right:2px}
 
   /* ---------- sections ---------- */
   section{scroll-margin-top:64px;padding-top:44px}
@@ -181,7 +182,7 @@
   .fcard .row{display:flex;justify-content:space-between;gap:10px;align-items:baseline}
   .fcard .nm{font-family:'Newsreader',serif;font-weight:600;font-size:17px;line-height:1.3}
   .fcard .pr{font-family:'Newsreader',serif;font-size:17px;font-weight:500;white-space:nowrap}
-  .fcard .pr span{font-family:'Archivo',sans-serif;font-size:9.5px;letter-spacing:.1em;color:var(--copper);margin-right:2px}
+  .fcard .pr span{font-family:'Archivo',sans-serif;font-size:9.5px;letter-spacing:.1em;color:var(--copper-text);margin-right:2px}
   .fcard .ds{margin-top:4px;font-size:13px;color:var(--ink-soft)}
   .fcard .ds em{font-style:italic;color:var(--clay)}
 
@@ -216,7 +217,7 @@
   }
   .pr span{
     display:block;font-family:'Archivo',sans-serif;font-size:9.5px;
-    letter-spacing:.12em;color:var(--copper);font-weight:500;
+    letter-spacing:.12em;color:var(--copper-text);font-weight:500;
   }
 
   /* ---------- endpoint hints ---------- */
@@ -286,7 +287,7 @@
 
   /* ---------- back to top ---------- */
   .totop{
-    position:fixed;right:16px;bottom:18px;z-index:30;
+    position:fixed;right:16px;bottom:calc(18px + env(safe-area-inset-bottom));z-index:30;
     width:44px;height:44px;border-radius:50%;border:1px solid rgba(46,37,25,.18);
     background:rgba(255,253,248,.95);cursor:pointer;
     display:flex;align-items:center;justify-content:center;
@@ -304,6 +305,20 @@
   }
   footer .seal{margin:0 auto 18px}
   footer p+p{margin-top:6px}
+
+  /* ---------- card focus-visible ---------- */
+  .sig:focus-visible, .pair:focus-visible{ outline:2px solid var(--copper); outline-offset:2px; }
+
+  @media print{
+    nav, .totop, .sigrail, .pairrail { display:none !important; }
+    .hero, .band { background:#fff !important; color:#000 !important; }
+    .hero .sub, .hero .branches, .band p, .band h3 { color:#000 !important; }
+    .hero .photo { display:none; }
+    section { break-inside:avoid; padding-top:18px; }
+    .fcard, .sig, .pair, .item { opacity:1 !important; transform:none !important; }
+    body { font-size:12px; }
+    a { text-decoration:none; color:#000; }
+  }
 </style>
 </head>
 <body>
@@ -437,7 +452,7 @@
   </div>
   <div class="list">
     <div class="item noimg"><div class="tx"><div class="nm">Espresso</div><p class="ds">Our signature roast — single or double.</p></div><div class="pr"><span>AED</span>17 / 19</div></div>
-    <div class="item noimg"><div class="tx"><div class="nm">Espresso Macchiato</div><p class="ds">Marked with a spoon of milk foam — single or double.</p></div><div class="pr"><span>AED</span>18 / 20</div></div>
+    <div class="item noimg"><div class="tx"><div class="nm">Espresso Macchiato</div><p class="ds">Marked with a spoonful of foamed milk — single or double.</p></div><div class="pr"><span>AED</span>18 / 20</div></div>
     <div class="item noimg"><div class="tx"><div class="nm">Americano</div><p class="ds">Espresso lengthened with hot water.</p></div><div class="pr"><span>AED</span>18</div></div>
     <div class="item noimg"><div class="tx"><div class="nm">Cortado</div><p class="ds">Equal parts espresso and steamed milk.</p></div><div class="pr"><span>AED</span>22</div></div>
     <div class="item noimg"><div class="tx"><div class="nm">Piccolo</div><p class="ds">A short latte — small and strong.</p></div><div class="pr"><span>AED</span>22</div></div>
@@ -458,7 +473,7 @@
 
 <section id="turkish-coffee">
   <header class="sec"><div class="seal"></div><h2>Turkish Coffee</h2>
-    <p class="note">Finely ground, brewed unfiltered in the cezve — served the traditional way, with a piece of Turkish delight.</p>
+    <p class="note">Finely ground, brewed unfiltered in the cezve (the small copper pot) — served the traditional way, with a piece of Turkish delight.</p>
   </header>
   <div class="feat single">
     <div class="fcard">
@@ -470,6 +485,7 @@
   <div class="list">
     <div class="item noimg"><div class="tx"><div class="nm">Turkish Coffee with Mastic</div><p class="ds">Scented with Aegean mastic — single or double.</p></div><div class="pr"><span>AED</span>20 / 22</div></div>
   </div>
+  <p class="hint">Best with a piece of our Roche chocolate — ask at the counter.</p>
 </section>
 
 <section id="cold-coffee">
@@ -570,7 +586,9 @@
 </section>
 
 <section id="breakfast">
-  <header class="sec"><div class="seal"></div><h2>Breakfast</h2></header>
+  <header class="sec"><div class="seal"></div><h2>Breakfast</h2>
+    <p class="note">Served all day.</p>
+  </header>
   <div class="feat">
     <div class="fcard">
       <div class="im"><span class="badge">Most loved</span><img src="img/breakfast-platter.jpg" alt="Healthy breakfast platter" loading="lazy"></div>
@@ -597,21 +615,21 @@
     <div class="fcard">
       <div class="im"><span class="badge">Bestseller</span><img src="img/chicken-avocado.jpg" alt="Chicken avocado sandwich" loading="lazy"></div>
       <div class="tx"><div class="row"><div class="nm">Chicken Avocado Sandwich</div><div class="pr"><span>AED</span>37</div></div>
-        <p class="ds">Sourdough, mint mayo, caramelised onion, Emmental.</p></div>
+        <p class="ds">Chicken, avocado, sourdough, mint mayo, caramelised onion, Emmental.</p></div>
     </div>
     <div class="fcard">
       <div class="im"><img src="img/halloumi-zaatar.jpg" alt="Grilled halloumi zaatar sandwich" loading="lazy"></div>
       <div class="tx"><div class="row"><div class="nm">Grilled Halloumi Zaatar</div><div class="pr"><span>AED</span>33</div></div>
-        <p class="ds">Brown ciabatta, pesto, tomato, rocca. <em>Vegetarian</em></p></div>
+        <p class="ds">Grilled halloumi, zaatar, brown ciabatta, pesto, tomato, rocket. <em>Vegetarian</em></p></div>
     </div>
   </div>
   <div class="list">
-    <div class="item noimg"><div class="tx"><div class="nm">Healthy Club Sandwich</div><p class="ds">Omelette, chicken breast and turkey on whole grain bread, with side salad.</p></div><div class="pr"><span>AED</span>43</div></div>
-    <div class="item noimg"><div class="tx"><div class="nm">Smoked Turkey Ham &amp; Cheese</div><p class="ds">Grilled sourdough panini with mozzarella.</p></div><div class="pr"><span>AED</span>36</div></div>
+    <div class="item"><div class="ph has" style="background-image:url('img/healthy-club.jpg')"></div><div class="tx"><div class="nm">Healthy Club Sandwich</div><p class="ds">Omelette, chicken breast and turkey on whole grain bread, with side salad.</p></div><div class="pr"><span>AED</span>43</div></div>
+    <div class="item"><div class="ph has" style="background-image:url('img/turkey-ham-cheese.jpg')"></div><div class="tx"><div class="nm">Smoked Turkey Ham &amp; Cheese</div><p class="ds">Grilled sourdough panini with mozzarella.</p></div><div class="pr"><span>AED</span>36</div></div>
     <div class="item"><div class="ph has" style="background-image:url('img/simit-cheese.jpg')"></div><div class="tx"><div class="nm">Simit Cheese Sandwich</div><p class="ds">Toasted sesame simit with white cheese. <em>Vegetarian</em></p></div><div class="pr"><span>AED</span>31</div></div>
     <div class="item noimg"><div class="tx"><div class="nm">Cheese &amp; Tomato Sandwich</div><p class="ds">Brown bread, simple and fresh. <em>Vegetarian</em></p></div><div class="pr"><span>AED</span>23</div></div>
-    <div class="item noimg"><div class="tx"><div class="nm">Quinoa &amp; Rosemary Chicken Salad</div><p class="ds">Quinoa, broccoli, tomato, lemon dressing.</p></div><div class="pr"><span>AED</span>41</div></div>
-    <div class="item noimg"><div class="tx"><div class="nm">Grilled Halloumi &amp; Walnut Salad</div><p class="ds">Greens, grilled tomato, balsamic. <em>Vegetarian · Contains nuts</em></p></div><div class="pr"><span>AED</span>41</div></div>
+    <div class="item noimg"><div class="tx"><div class="nm">Quinoa &amp; Rosemary Chicken Salad</div><p class="ds">Rosemary chicken, quinoa, broccoli, tomato, lemon dressing.</p></div><div class="pr"><span>AED</span>41</div></div>
+    <div class="item noimg"><div class="tx"><div class="nm">Grilled Halloumi &amp; Walnut Salad</div><p class="ds">Grilled halloumi, walnuts, greens, grilled tomato, balsamic. <em>Vegetarian · Contains nuts</em></p></div><div class="pr"><span>AED</span>41</div></div>
   </div>
 </section>
 
@@ -643,7 +661,7 @@
         <p class="ds">Soaked in saffron milk, whipped cream.</p></div>
     </div>
     <div class="fcard">
-      <div class="im"><img src="img/tiramisu.jpg" alt="Brewed tiramisu" loading="lazy"></div>
+      <div class="im"><span class="badge">Bestseller</span><img src="img/tiramisu.jpg" alt="Brewed tiramisu" loading="lazy"></div>
       <div class="tx"><div class="row"><div class="nm">Brewed Tiramisu</div><div class="pr"><span>AED</span>38</div></div>
         <p class="ds">Soaked in our own brewed coffee.</p></div>
     </div>
@@ -653,19 +671,21 @@
     <div class="item"><div class="ph has" style="background-image:url('img/tiramisu-glaze.jpg')"></div><div class="tx"><div class="nm">Tiramisu Glaze</div><p class="ds">A glazed take on the classic.</p></div><div class="pr"><span>AED</span>46</div></div>
     <div class="item"><div class="ph has" style="background-image:url('img/honey-cake.jpg')"></div><div class="tx"><div class="nm">Honey Cake</div><p class="ds">Layered honey sponge, lightly spiced.</p></div><div class="pr"><span>AED</span>39</div></div>
     <div class="item"><div class="ph has" style="background-image:url('img/blueberry-cheesecake.jpg')"></div><div class="tx"><div class="nm">Blueberry Cheesecake</div><p class="ds">Baked, with blueberry compote.</p></div><div class="pr"><span>AED</span>39</div></div>
-    <div class="item"><div class="ph has" style="background-image:url('img/strawberry-cheesecake.jpg')"></div><div class="tx"><div class="nm">Strawberry Cheesecake</div><p class="ds">Baked, whipped cream, lotus crumb.</p></div><div class="pr"><span>AED</span>39</div></div>
+    <div class="item"><div class="ph has" style="background-image:url('img/strawberry-cheesecake.jpg')"></div><div class="tx"><div class="nm">Strawberry Cheesecake</div><p class="ds">Baked, strawberry, whipped cream, lotus crumb.</p></div><div class="pr"><span>AED</span>39</div></div>
     <div class="item"><div class="ph has" style="background-image:url('img/lotus-cake.jpg')"></div><div class="tx"><div class="nm">Lotus Cake</div><p class="ds">Lotus cream and crisp crumble.</p></div><div class="pr"><span>AED</span>39</div></div>
-    <div class="item"><div class="ph has" style="background-image:url('img/vanilla-milk-cake.jpg')"></div><div class="tx"><div class="nm">Vanilla Milk Cake</div><p class="ds">Milk-soaked sponge, whipped cream.</p></div><div class="pr"><span>AED</span>38</div></div>
+    <div class="item"><div class="ph has" style="background-image:url('img/vanilla-milk-cake.jpg')"></div><div class="tx"><div class="nm">Vanilla Milk Cake</div><p class="ds">Vanilla-soaked sponge, whipped cream.</p></div><div class="pr"><span>AED</span>38</div></div>
     <div class="item"><div class="ph has" style="background-image:url('img/mango-magic-cake.jpg')"></div><div class="tx"><div class="nm">Mango Magic Cake</div><p class="ds">Mango cream on soft sponge.</p></div><div class="pr"><span>AED</span>38</div></div>
     <div class="item"><div class="ph has" style="background-image:url('img/red-velvet-ice-cream.jpg')"></div><div class="tx"><div class="nm">Red Velvet Cake with Ice Cream</div><p class="ds">Cream cheese frosting, vanilla ice cream.</p></div><div class="pr"><span>AED</span>36</div></div>
-    <div class="item"><div class="ph has" style="background-image:url('img/cheesecake-choc.jpg')"></div><div class="tx"><div class="nm">Cheesecake with Chocolate Sauce</div><p class="ds">Topped with chocolate mousse.</p></div><div class="pr"><span>AED</span>36</div></div>
+    <div class="item"><div class="ph has" style="background-image:url('img/cheesecake-choc.jpg')"></div><div class="tx"><div class="nm">Cheesecake with Chocolate Sauce</div><p class="ds">Topped with chocolate sauce.</p></div><div class="pr"><span>AED</span>36</div></div>
   </div>
 </section>
 
 <section id="bakery">
-  <header class="sec"><div class="seal"></div><h2>Bakery</h2></header>
+  <header class="sec"><div class="seal"></div><h2>Bakery</h2>
+    <p class="note">Baked fresh through the day.</p>
+  </header>
   <div class="list">
-    <div class="item"><div class="ph has" style="background-image:url('img/plain-croissant.jpg')"></div><div class="tx"><div class="nm">Plain Croissant</div><p class="ds">Baked through the day.</p></div><div class="pr"><span>AED</span>10</div></div>
+    <div class="item"><div class="ph has" style="background-image:url('img/plain-croissant.jpg')"></div><div class="tx"><div class="nm">Plain Croissant</div></div><div class="pr"><span>AED</span>10</div></div>
     <div class="item"><div class="ph has" style="background-image:url('img/cheese-croissant.jpg')"></div><div class="tx"><div class="nm">Cheese Croissant</div></div><div class="pr"><span>AED</span>12</div></div>
     <div class="item"><div class="ph has" style="background-image:url('img/red-velvet-muffin.jpg')"></div><div class="tx"><div class="nm">Red Velvet Muffin</div></div><div class="pr"><span>AED</span>16</div></div>
     <div class="item"><div class="ph has" style="background-image:url('img/double-choc-muffin.jpg')"></div><div class="tx"><div class="nm">Double Chocolate Muffin</div></div><div class="pr"><span>AED</span>16</div></div>
@@ -693,7 +713,7 @@
 
 <section id="chocolate">
   <header class="sec"><div class="seal"></div><h2>Chocolate &amp; Gifts</h2>
-    <p class="note">Made with our own chocolate. Ask our team to wrap any selection as a gift — boxes from AED 59, ready while you finish your coffee.</p>
+    <p class="note">Made with our own chocolate. Ask our team to wrap any selection as a gift, ready while you finish your coffee — or choose a ready-made gift box below, from AED 19.</p>
   </header>
   <div class="feat">
     <div class="fcard">
@@ -704,11 +724,11 @@
     <div class="fcard">
       <div class="im"><img src="img/dragees.jpg" alt="Chocolate dragées" loading="lazy"></div>
       <div class="tx"><div class="row"><div class="nm">Dragées — 200 g</div><div class="pr"><span>AED</span>59</div></div>
-        <p class="ds">Coffee bean, pistachio, almond, pecan or candied orange in chocolate.</p></div>
+        <p class="ds">Coffee bean, pistachio, almond, pecan or candied orange in chocolate. <em>Contains nuts</em></p></div>
     </div>
   </div>
   <div class="list">
-    <div class="item"><div class="ph has" style="background-image:url('img/broken-tablets.jpg')"></div><div class="tx"><div class="nm">Broken Chocolate Tablets — per kg</div><p class="ds">Hazelnut, raisin and candied orange tablets, broken and sold by weight at the counter.</p></div><div class="pr"><span>AED</span>316</div></div>
+    <div class="item"><div class="ph has" style="background-image:url('img/broken-tablets.jpg')"></div><div class="tx"><div class="nm">Broken Chocolate Tablets — per kg</div><p class="ds">Hazelnut, raisin and candied orange tablets, broken and sold by weight at the counter. <em>Contains nuts</em></p></div><div class="pr"><span>AED</span>316</div></div>
     <div class="item"><div class="ph has" style="background-image:url('img/gofrik.jpg')"></div><div class="tx"><div class="nm">Gofrik Chocolate — 24 pcs</div></div><div class="pr"><span>AED</span>139</div></div>
     <div class="item"><div class="ph has" style="background-image:url('img/milk-coins.jpg')"></div><div class="tx"><div class="nm">Milk Chocolate Coins — 500 g</div></div><div class="pr"><span>AED</span>90</div></div>
     <div class="item"><div class="ph has" style="background-image:url('img/dark-coins.jpg')"></div><div class="tx"><div class="nm">Dark Chocolate Coins — 500 g</div></div><div class="pr"><span>AED</span>90</div></div>
@@ -736,7 +756,7 @@
         <p class="ds">Six chocolates in the marble box — the easy thank-you.</p></div>
     </div>
     <div class="fcard">
-      <div class="im"><span class="badge">Bestseller</span><img src="img/gb-elite-25.jpg" alt="Elite 25 luxury gift box" loading="lazy"></div>
+      <div class="im"><span class="badge">Luxury pick</span><img src="img/gb-elite-25.jpg" alt="Elite Gift Box, 25 pieces" loading="lazy"></div>
       <div class="tx"><div class="row"><div class="nm">Elite Gift Box — Medium (25)</div><div class="pr"><span>AED</span>179</div></div>
         <p class="ds">Twenty-five assorted chocolates in the signature Elite box.</p></div>
     </div>
@@ -744,7 +764,7 @@
   <div class="list">
     <div class="item"><div class="ph has" style="background-image:url('img/gb-mini.jpg')"></div><div class="tx"><div class="nm">Elegant Mini Gift Box</div><p class="ds">A little box of chocolates — pink, blue or white. Add one to any order.</p></div><div class="pr"><span>AED</span>19</div></div>
     <div class="item"><div class="ph has" style="background-image:url('img/gb-marble-luxury.jpg')"></div><div class="tx"><div class="nm">Marble Luxury Gift Box</div></div><div class="pr"><span>AED</span>98</div></div>
-    <div class="item"><div class="ph has" style="background-image:url('img/gb-elite-15.jpg')"></div><div class="tx"><div class="nm">Elite Gift Box — Small (15)</div></div><div class="pr"><span>AED</span>98</div></div>
+    <div class="item"><div class="ph has" style="background-image:url('img/gb-elite-15.jpg')"></div><div class="tx"><div class="nm">Elite Gift Box — Small (15) <span class="badge">Bestseller</span></div></div><div class="pr"><span>AED</span>98</div></div>
     <div class="item"><div class="ph has" style="background-image:url('img/gb-double-decker.jpg')"></div><div class="tx"><div class="nm">Double Decker Gift Box</div><p class="ds">Two tiers of assorted chocolates.</p></div><div class="pr">from <span>AED</span>119</div></div>
     <div class="item"><div class="ph has" style="background-image:url('img/gb-elite-35.jpg')"></div><div class="tx"><div class="nm">Elite Gift Box — Large (35)</div></div><div class="pr"><span>AED</span>229</div></div>
     <div class="item noimg"><div class="tx"><div class="nm">Elite Gift Box with Roche</div><p class="ds">The Elite box, filled with pistachio roche. <em>Contains nuts</em></p></div><div class="pr"><span>AED</span>309</div></div>
@@ -777,7 +797,7 @@
     <div class="item noimg"><div class="tx"><div class="nm">Turkish Coffee with Mastic</div></div><div class="pr"><span>AED</span>50</div></div>
     <div class="item noimg"><div class="tx"><div class="nm">Turkish Coffee — Medium Roast</div></div><div class="pr"><span>AED</span>49</div></div>
     <div class="item noimg"><div class="tx"><div class="nm">Turkish Coffee — Dark Roast</div></div><div class="pr"><span>AED</span>49</div></div>
-    <div class="item noimg"><div class="tx"><div class="nm">Sahleb</div></div><div class="pr"><span>AED</span>40</div></div>
+    <div class="item noimg"><div class="tx"><div class="nm">Salep — Take Home</div><p class="ds">Our orchid-root drink mix, to make at home.</p></div><div class="pr"><span>AED</span>40</div></div>
   </div>
 </section>
 
@@ -814,10 +834,11 @@
   function setActive(id){
     if(current === id) return;
     current = id;
-    links.forEach(function(a){ a.classList.remove('on'); });
+    links.forEach(function(a){ a.classList.remove('on'); a.removeAttribute('aria-current'); });
     var a = byId[id];
     if(a){
       a.classList.add('on');
+      a.setAttribute('aria-current', 'true');
       ink.style.width = a.offsetWidth + 'px';
       ink.style.transform = 'translateX(' + a.offsetLeft + 'px)';
       a.scrollIntoView({block:'nearest', inline:'center', behavior: reduce ? 'auto' : 'smooth'});
